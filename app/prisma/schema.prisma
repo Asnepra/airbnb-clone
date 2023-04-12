@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+//Some fields are optional as one can login using google and github so can't store
+//hashpassword for them
+//FavoriteIds is for making a listing or property favorite basically liked or not
+model User{
+  id String @id @default( auto()) @map("_id") @db.ObjectId
+  name String?
+  email String? @unique
+  emailVerified DateTime?
+  image String?
+  hashedPassword String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  favoriteIds String[] @db.ObjectId
+
+
+  //A user can have multiple accounts, multiple listings and multiple reservations
+  accounts AccountModel[]
+  listings ListingModel[]
+  reserveations ReservationModel[]
+}
+
+//It is for social Login 
+model AccountModel{
+  id String @id @default( auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId 
+  type String
+  provider String
+  providerAccountId String
+  refresh_token String? @db.String
+  access_token String? @db.String
+  expires_at Int?
+  token_type String?
+  scope String?
+  id_token String?  @db.String
+  session_state String?
+
+
+  user User @relation(fields: [userId], references: [id], onDelete:Cascade)
+
+  //Need unique key for the user table
+
+  @@unique([provider,providerAccountId])
+}
+
+model ListingModel{
+  id String @id @default( auto()) @map("_id") @db.ObjectId
+  title String
+  description String
+  imagesrc String
+  createdAt DateTime @default(now())
+  category String
+  roomCount Int
+  bathroomCount Int
+  guestCount Int
+  locationValue String
+
+  //For user relationship
+
+  userId String @db.ObjectId
+  price Int
+
+  user User @relation(fields: [userId], references: [id], onDelete:Cascade)
+
+  //Every listing is going to have an array of Reservations
+    reservations ReservationModel[]
+
+}
+
+model ReservationModel{
+  id String @id @default( auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  listingId String @db.ObjectId
+  startDate DateTime
+  endDate DateTime
+  totalPrice Int
+  createdAt DateTime @default(now())
+
+  //Relation, here the references [id] is to the User id
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  //It refernces the id from ListingModel to ReservationModel
+  listing ListingModel @relation(fields: [listingId],references: [id], onDelete: Cascade)
+}
