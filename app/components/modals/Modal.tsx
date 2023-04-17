@@ -94,13 +94,13 @@ const Model:React.FC<ModalProps>=({
     return(
         <>
            <div className="justify-center items-center flex overflow-x-hidden overflow-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70">
-                <div className="relative w-full md:w-1/3 xl:2/5 mx-auto h-full
+                <div className="relative w-full md:w-1/3 xl:2/5 mx-auto max-h-screen
                 md:h-auto">
                     {/**Content */}
                     {/** This div is conditional div */}
                     <div 
                         className={`
-                        translate duration-300 h-full
+                        translate duration-300 max-h-screen
                         ${showModal?'translate-y-0':'translate-y-full'}
                         ${showModal?'opacity-100':'opacity-0'}
                         `}>
@@ -108,7 +108,7 @@ const Model:React.FC<ModalProps>=({
                         rounded-lg shadow-lg relative flex flex-col
                          bg-zinc-100 outline-none focus:outline-none">
                             {/**Header for login or register */}
-                            <div className="flex items-center p-4 md:p-6 rounded-sm justify-center relative  border-b-[1px]">
+                            <div className="flex items-center p-4 rounded-sm justify-center relative  border-b-[1px]">
                                 <button 
                                 onClick={handleClose}
                                 className="border-0 hover:opacity-70 transition absolute right-5">
@@ -119,12 +119,12 @@ const Model:React.FC<ModalProps>=({
                                 </div>
                             </div>
                             {/**Body of the Login Page */}
-                            <div className="relative p-2 md:p-6">
+                            <div className="relative p-4">
                                 {body}
                             </div>
                             {/**For Fotter */}
-                            <div className="flex flex-col p-2 md:p-6 gap-1 md:gap-2">
-                                <div className="flex flex-row items-center gap-2 md:gap-4 w-full">
+                            <div className="flex flex-col p-2 pr-4 pl-4 gap-1 md:gap-2">
+                                <div className="flex flex-row items-center gap-2 w-full">
                                     {/**This is our primary action Button */}
                                     <Button disabled={disabled}
                                         label={actionLabel}
