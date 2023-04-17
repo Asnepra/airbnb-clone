@@ -62,7 +62,7 @@ const RegisterModal= () => {
   }, [registerModal, loginModal])
 
   const bodyContent = (
-    <div className="flex flex-col gap-2 md:gap-4">
+    <div className="flex flex-col gap-2">
       <Heading
         title="Welcome to Airbnb"
         subtitle="Create an account!"
@@ -97,7 +97,7 @@ const RegisterModal= () => {
   )
 
   const footerContent = (
-    <div className="flex flex-col gap-4 mt-3">
+    <div className="flex flex-col gap-2 mt-1">
       <hr />
       <Button 
         outline 
@@ -111,10 +111,7 @@ const RegisterModal= () => {
         icon={AiFillGithub}
         onClick={() => signIn('github')}
       />
-      <div 
-        className="
-          text-slate-700 
-          text-center ">
+      <div className="text-slate-700 text-center ">
         <p>Already have an account?
           <span 
             onClick={onToggle} 
