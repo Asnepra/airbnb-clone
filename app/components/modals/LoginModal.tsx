@@ -42,12 +42,7 @@ const LoginModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = 
   (data) => {
     setIsLoading(true);
-
-    console.log('Login Modal Submit---------------------');
-
-        console.log(data.email);
-        console.log(data.password);
-
+    
     signIn('credentials', { 
       ...data, 
       redirect: false,

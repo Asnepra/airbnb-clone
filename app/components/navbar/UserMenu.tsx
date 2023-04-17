@@ -44,7 +44,7 @@ const UserMenu:React.FC<UserMenuProp>=({
                 transition p-2 md:py-1 md:px-2 border-[1px] border-neutral-200">
                     <AiOutlineMenu/>
                     <div className='hidden md:block'>
-                        <Avatar src={undefined}/>
+                        <Avatar avatarImageUrl={currentUser?.image}/>
                     </div>
                 </div>
                 

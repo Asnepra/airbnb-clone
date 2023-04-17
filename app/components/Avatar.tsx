@@ -3,12 +3,12 @@
 import Image from "next/image";
 
 interface AvatarProps {
-  src: string | null | undefined;
+  avatarImageUrl: string | null | undefined;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ src }) => {
+const Avatar: React.FC<AvatarProps> = ({ avatarImageUrl }) => {
   return ( 
-    <Image src="/images/placeholder.jpg" alt="Avatar"
+    <Image src={avatarImageUrl  ||"/images/placeholder.jpg"} alt="Avatar"
         className="rounded-full cursor-pointer"
         height={30} width={30}
         ></Image>
