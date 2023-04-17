@@ -23,7 +23,7 @@ import Button from "../Button";
 const LoginModal = () => {
   const router = useRouter();
   const loginModal = useLoginModal();
-  const registerModal = useRegisterModal();
+  const registerModal = useRegisterModal();//To switch between register and login modal
   const [isLoading, setIsLoading] = useState(false);
 
   const { 
@@ -42,6 +42,11 @@ const LoginModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = 
   (data) => {
     setIsLoading(true);
+
+    console.log('Login Modal Submit---------------------');
+
+        console.log(data.email);
+        console.log(data.password);
 
     signIn('credentials', { 
       ...data, 

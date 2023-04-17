@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = ({
         className={`absolute  text-md
           duration-150 
           transform 
-          -translate-y-3 
+          -translate-y-4 
           top-5 
           z-10 
           origin-[0] 

@@ -54,6 +54,12 @@ export const authOptions: AuthOptions = {
           throw new Error('Invalid credentials: Incorrect password');
         }
 
+        //Debugging
+        console.log('jdvbjskdnvksad---------------------');
+
+        console.log(credentials.email);
+        console.log(credentials.password);
+
         return user;
       }
     })

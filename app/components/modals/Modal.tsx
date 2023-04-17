@@ -9,7 +9,7 @@ interface ModalProps{
     isOpen?: boolean;
     onClose:()=>void;
     onSubmit:()=> void;
-    //this means the title is optional
+    //this means the title is optional (Tile is either Login or Register)
     title?:string;
     body?:React.ReactElement;
     footer?:React.ReactElement;
@@ -20,9 +20,7 @@ interface ModalProps{
     secondaryActionLabel?:string;
 
 }
-//This is made to protect from the hydration error on next13 a bug
-// that if you click vhile page is loading it shovs error
-//use it in the layout.tsx file
+
 
 const Model:React.FC<ModalProps>=({
     isOpen,
