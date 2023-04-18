@@ -30,10 +30,23 @@ const UserMenu:React.FC<UserMenuProp>=({
     const toggleMenu =useCallback(()=>{
         setIsOpenMenu((value) =>!value);
     },[]);
+
+    const onRent = useCallback(()=>{
+        //Check if there is currentUser
+
+        if(!currentUser) {
+            //ask the user to login and break out of this using return
+            return loginModal.onOpen();
+        }
+
+        //If there is a currentUser the open the rentModal
+
+
+    },[currentUser, loginModal]);
     return(
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
-                <div onClick={()=>{}}
+                <div onClick={onRent}
                 className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full
                 hover:bg-neutral-100 transition cursor-pointer"
                 > Airbnb Your Home
