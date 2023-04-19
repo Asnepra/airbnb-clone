@@ -124,16 +124,17 @@ const Model:React.FC<ModalProps>=({
                             <div className="flex flex-col p-1 pr-4 pl-4 gap-1 md:gap-2">
                                 <div className="flex flex-row items-center gap-2 w-full">
                                     {/**This is our primary action Button */}
-                                    <Button disabled={disabled}
-                                        label={actionLabel}
-                                        onClick={handleSubmit}/>
-                                        {/**This is boolean conditional rendering of the secondary action, if secondary actions exists then only it is render */}
-                                        {secondaryAction && secondaryActionLabel&&(
+                                    {secondaryAction && secondaryActionLabel&&(
                                             <Button outline
                                             disabled={disabled}
                                             label={secondaryActionLabel}
                                             onClick={handleSecondaryAction}/>
                                         )}
+                                    <Button disabled={disabled}
+                                        label={actionLabel}
+                                        onClick={handleSubmit}/>
+                                        {/**This is boolean conditional rendering of the secondary action, if secondary actions exists then only it is render */}
+                                        
                                 
                                 </div>
                                 {footer}

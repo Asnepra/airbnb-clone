@@ -10,6 +10,7 @@ import useLoginModal from '../../hooks/useLoginModal';
 
 import {signOut} from "next-auth/react"
 import { SafeUser } from '@/app/types';
+import useRentModal from '@/app/hooks/useRentModal';
 
 
 interface UserMenuProp{
@@ -22,6 +23,8 @@ const UserMenu:React.FC<UserMenuProp>=({
     const loginModal = useLoginModal();
 
     const registerModal =useRegisterModal();
+
+    const rentModal = useRentModal();
 
     // to toggle menu icon, initially menu is closed and both variables are false
 
@@ -40,9 +43,9 @@ const UserMenu:React.FC<UserMenuProp>=({
         }
 
         //If there is a currentUser the open the rentModal
+        rentModal.onOpen();
 
-
-    },[currentUser, loginModal]);
+    },[currentUser, loginModal,rentModal]);
     return(
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
@@ -80,7 +83,7 @@ const UserMenu:React.FC<UserMenuProp>=({
                             <MenuItem onClick={()=>{}}
                             label="My Properties"/>
                             {/**This button disappears on home */}
-                            <MenuItem onClick={()=>{}}
+                            <MenuItem onClick={rentModal.onOpen}
                             label="AirBnb My Home"/>
                             <hr/>
                             <MenuItem onClick={()=>signOut()}
