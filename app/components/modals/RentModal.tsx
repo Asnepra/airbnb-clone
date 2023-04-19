@@ -10,6 +10,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import CountrySelectProperty from '../inputs/CountrySelectProperty';
 import dynamic from 'next/dynamic';
 import Counter from '../inputs/Counter';
+import ImageUpload from '../inputs/ImageUpload';
 
 //Number of steps to complete for listing a property for rent
 enum STEPS{
@@ -62,6 +63,7 @@ const RentModal = () => {
   const guestCount = watch('guestCount');
   const roomCount = watch('roomCount');
   const bathroomCount= watch('bathroomCount');
+  const imageSrc = watch('imageSrc');
 
   //importing map dynamically for rendering
 
@@ -176,6 +178,18 @@ const secondaryActionLabels = useMemo(()=>{
         value={bathroomCount}
         onChange={(value)=>setCustomValue('bathroomCount',value)}
         />
+      </div>
+    )
+  }
+
+  //Body Content for adding images
+  if(steps===STEPS.IMAGES_OF_PROPERTY){
+    bodyContent=(
+      <div className='flex flex-col gap-4 lg:gap-8'>
+        <Heading title='Add a photo of your place'
+        subtitle='Show your Guests what your place looks like!'/>
+        <ImageUpload value={imageSrc}
+        onChange={(value)=> setCustomValue('imageSrc', value)}/>
       </div>
     )
   }
