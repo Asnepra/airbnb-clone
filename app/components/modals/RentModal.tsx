@@ -9,6 +9,7 @@ import CategoryInput from '../inputs/CategoryInput';
 import { FieldValues, useForm } from 'react-hook-form';
 import CountrySelectProperty from '../inputs/CountrySelectProperty';
 import dynamic from 'next/dynamic';
+import Counter from '../inputs/Counter';
 
 //Number of steps to complete for listing a property for rent
 enum STEPS{
@@ -44,7 +45,7 @@ const RentModal = () => {
         location:null, //location Object for the property location
         guestCount:1, // default to 1
         roomCount:1, // default to 1
-        bathRoomCount:1, // default
+        bathroomCount:1, // default
         imageSrc:'', // default
         price:1, // default to 1
         title: '', // default to empty string
@@ -58,6 +59,9 @@ const RentModal = () => {
 
   const categorySelected = watch('category');
   const locationSelected = watch('location');
+  const guestCount = watch('guestCount');
+  const roomCount = watch('roomCount');
+  const bathroomCount= watch('bathroomCount');
 
   //importing map dynamically for rendering
 
@@ -146,6 +150,44 @@ const secondaryActionLabels = useMemo(()=>{
     )
   }
 
+  //Added the option for Information of the property
+
+  if(steps===STEPS.INFORMATION_OF_PROPERTY){
+    //Change the Body Content
+
+    bodyContent=(
+      <div className='flex flex-col gap-8'>
+        <Heading title='Share some informaton about your property'
+        subtitle='vhat amenities do they have?'/>
+        <Counter title='Guests'
+        subtitle='Number of guests you allow?'
+        value={guestCount}
+        onChange={(value)=>setCustomValue('guestCount',value)}
+        />
+        <hr/>
+        <Counter title='Rooms'
+        subtitle='Number of rooms you have in your property?'
+        value={roomCount}
+        onChange={(value)=>setCustomValue('roomCount',value)}
+        />
+        <hr/>
+        <Counter title='Bathrooms'
+        subtitle='Number of bathroom you have in your property?'
+        value={bathroomCount}
+        onChange={(value)=>setCustomValue('bathroomCount',value)}
+        />
+      </div>
+    )
+  }
+
+  const footer=(
+    <div className='flex items-center justify-center p-1 md:p-2'>
+      <span className=''>
+        Step {steps+1} out of 6
+      </span>
+    </div>
+  )
+
   
   return (
     <Modal isOpen={rentModal.isOpen} 
@@ -155,6 +197,7 @@ const secondaryActionLabels = useMemo(()=>{
     secondaryActionLabel={secondaryActionLabels}
     secondaryAction={steps===STEPS.CATEGORY_OF_PROPERTY ? undefined: onBack}
     body={bodyContent}
+    footer={footer}
      title='Rent Your Property'/>
   )
 }

@@ -3,6 +3,8 @@
 import { useCallback } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
+
+//Used to provide the information about the Propery like number of rooms, bathrooms
 interface CounterProps {
   title: string;
   subtitle: string;
@@ -40,8 +42,8 @@ const Counter: React.FC<CounterProps> = ({
         <div
           onClick={onReduce}
           className="
-            w-10
-            h-10
+            w-7
+            h-7
             rounded-full
             border-[1px]
             border-neutral-400
@@ -68,8 +70,8 @@ const Counter: React.FC<CounterProps> = ({
         <div
           onClick={onAdd}
           className="
-            w-10
-            h-10
+            w-7
+            h-7
             rounded-full
             border-[1px]
             border-neutral-400
