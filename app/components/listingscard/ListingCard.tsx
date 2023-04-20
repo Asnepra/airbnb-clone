@@ -1,7 +1,7 @@
 
 'use client'
 import useCountrySelectProperty from '@/app/hooks/useCountrySelectProperty';
-import { SafeUser } from '@/app/types';
+import { SafeListing, SafeUser } from '@/app/types';
 import { Listing, Reservation } from '@prisma/client'
 import { format } from 'date-fns';
 import Image from 'next/image';
@@ -14,7 +14,7 @@ import Button from '../Button';
 interface ListingCardProps{
     //Listing data from prisma
 
-    data:Listing;
+    data:SafeListing;
     reservations?:Reservation;// Optional reservations data from prisma
     onAction?: (id:string) => void;// Optional function onAction that takes id as string and returns void
     disabled?: boolean;

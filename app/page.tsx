@@ -29,7 +29,7 @@ export default async function Home() {
     <ClientOnly>
       <Container>
         <div className='pt-24 grid sm:grid-cols-2 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-8'>
-          {listings.map((item:any)=>{
+          {listings.map((item)=>{
             return (
               <ListingCard currentUser={currentUser} key={item.id}
               data={item}/>
