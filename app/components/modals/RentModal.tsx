@@ -6,11 +6,16 @@ import useRentModal from '@/app/hooks/useRentModal';
 import Heading from '../Heading';
 import Categories, { categories } from '../navbar/Categories';
 import CategoryInput from '../inputs/CategoryInput';
-import { FieldValues, useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import CountrySelectProperty from '../inputs/CountrySelectProperty';
 import dynamic from 'next/dynamic';
 import Counter from '../inputs/Counter';
 import ImageUpload from '../inputs/ImageUpload';
+import Input from '../inputs/Input';
+import { error } from 'console';
+import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 //Number of steps to complete for listing a property for rent
 enum STEPS{
@@ -24,14 +29,17 @@ enum STEPS{
 const RentModal = () => {
 
   const rentModal = useRentModal();
+  const router = useRouter();
   //Start by inputting the category of the property, default
   const [steps, setSteps] = useState(STEPS.CATEGORY_OF_PROPERTY);
+  //Loading stat for the description of the property
+  const [isLoading, setIsLoading] = useState(false);
 
   //Connect the category input to the RentModal
 
   const{
     register,
-    handleSubmitProperty,
+    handleSubmit,
     setPropertyValue,
     watch,
     setValue,
@@ -48,7 +56,7 @@ const RentModal = () => {
         roomCount:1, // default to 1
         bathroomCount:1, // default
         imageSrc:'', // default
-        price:1, // default to 1
+        price:10, // default to 1
         title: '', // default to empty string
         description: '', // default to empty string
 
@@ -89,6 +97,29 @@ const RentModal = () => {
   const onNext = () => {
     setSteps((value) => value+1);
   };
+
+  //Function for submitting the property for rent, data is from use-form
+  const onSubmit:SubmitHandler<FieldValues> = (data) =>{
+    //Check if this is the last step in the process
+    if(steps!==STEPS.PRICE_OF_PROPERTY){
+      return onNext();
+    }
+    //So if this is the last step then, we need to set isLoading to true and send data to the server...
+    setIsLoading(true);
+    //Make a post call to register the data
+    axios.post('/api/listings',data).then (()=>{
+      toast.success("Your Place have been registered for rent");
+      router.refresh();
+      //If listing is successfully created, reset the form
+      reset();
+      setSteps(STEPS.CATEGORY_OF_PROPERTY);
+      rentModal.onClose();
+    }).catch(()=>{
+      toast.error("Something went wrong, Try again later");
+    }).finally(()=>{
+      setIsLoading(false);
+    });
+  }
 //Adding Secondary Action Labels
 
 const secondaryActionLabels = useMemo(()=>{
@@ -194,6 +225,33 @@ const secondaryActionLabels = useMemo(()=>{
     )
   }
 
+  //Body Content for description and Price of the propderty
+
+  if(steps===STEPS.DESCRIPTION_OF_PROPERTY){
+    bodyContent=(
+      <div className='flex flex-col gap-4 md:gap-8'>
+        <Heading title='Give brief description about your Place'
+        subtitle='Short and simple is best!'/>
+        <Input id="title" label = "Title" disabled={isLoading}
+        register={register} errors={errors} required/>
+        <hr/>
+        <Input id="description" label = "Describe you Place" disabled={isLoading}
+        register={register} errors={errors} required/>
+
+      </div>
+    )
+  }
+
+  //Body Content for the Price of the Property
+  if(steps===STEPS.PRICE_OF_PROPERTY){
+    bodyContent=(
+      <div className='flex flex-col gap-4 md:gap-8'>
+        <Heading title='Set your price!' subtitle='Charges per night?'/>
+        <Input id="price" label="Price per night" formatPrice type='number' disabled={isLoading} register={register} errors={errors} required/>
+      </div>
+    )
+  }
+
   const footer=(
     <div className='flex items-center justify-center p-1 md:p-2'>
       <span className=''>
@@ -206,7 +264,7 @@ const secondaryActionLabels = useMemo(()=>{
   return (
     <Modal isOpen={rentModal.isOpen} 
     onClose={rentModal.onClose}
-    onSubmit={onNext}
+    onSubmit={handleSubmit(onSubmit)}
     actionLabel={actionLabel}
     secondaryActionLabel={secondaryActionLabels}
     secondaryAction={steps===STEPS.CATEGORY_OF_PROPERTY ? undefined: onBack}
