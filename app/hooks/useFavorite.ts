@@ -43,17 +43,17 @@ const useFavorites = ({
                 request = ()    => {
                     axios.delete(`/api/favorites/${listingId}`);
                 };
-                await request();
+                request();
                 router.refresh();
-                toast.success('Deleted from Favorites');
+                toast.success('Deleting from Favorites');
             }
             else{
                 request = () => {
                     axios.post(`/api/favorites/${listingId}`);
                 }
-                await request();
+                request();
                 router.refresh();
-                toast.success('Added to Favorites');
+                toast.success('Adding to Favorites');
             }
         }
         catch(error){
