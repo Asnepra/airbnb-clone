@@ -9,6 +9,7 @@ import ClientOnly from '@/app/components/ClientOnly';
 import EmptyState from '@/app/components/EmptyState';
 import React from 'react'
 import ListingClient from './ListingClient';
+import getReservations from '@/app/actions/getReservations';
 
 interface listingPageProps{
     listingId?: string;
@@ -19,7 +20,9 @@ const ListingPage = async (
 ) => {
     const listings = await getListingById(params);
     const currentUser = await getCurrentUser();
+    //calling the reservations
 
+    const reservation = await getReservations(params);
     //There might be the case in which there is no listings for a id and might receive null in params So diplay empty state page
     if(!listings) {
         return (
@@ -30,7 +33,7 @@ const ListingPage = async (
     }
   return (
     <ClientOnly>
-        <ListingClient user={currentUser} listing={listings}/>
+        <ListingClient user={currentUser} listing={listings} reservations={reservation}/>
     </ClientOnly>
   )
 }

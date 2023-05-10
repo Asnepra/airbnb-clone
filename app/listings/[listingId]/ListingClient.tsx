@@ -5,8 +5,7 @@ import ListingInformation from '@/app/components/listingscard/ListingInformation
 import ListingReservations from '@/app/components/listingscard/ListingReservations';
 import { categories } from '@/app/components/navbar/Categories';
 import useLoginModal from '@/app/hooks/useLoginModal';
-import { SafeListing, SafeUser } from '@/app/types';
-import { Reservation } from '@prisma/client'
+import { SafeListing, SafeReservation, SafeUser } from '@/app/types';
 import axios from 'axios';
 import { differenceInCalendarDays, eachDayOfInterval } from 'date-fns';
 import { useRouter } from 'next/navigation';
@@ -20,7 +19,7 @@ const initialDateRange={
     key:'selection'
 }
 interface ListingClientProps{
-    reservations?:Reservation[];
+    reservations?:SafeReservation[];
     listing: SafeListing & {
         user: SafeUser;// Beacuse in actions-> getListingById ve are returning user along vith listings
     };
@@ -84,8 +83,8 @@ const ListingClient:React.FC<ListingClientProps> = ({
             toast.success("Congratulations You reservation is successfull");
             setDateRange(initialDateRange);
             //redirect the user to tips page
-            router.refresh();
-        }).catch(()=>{
+            router.push('/trips');
+        }).catch(()=>{ 
             toast.error("Something went wrong, Try again");
         }).finally(()=>{
             setIsLoading(false);
@@ -97,10 +96,9 @@ const ListingClient:React.FC<ListingClientProps> = ({
     useEffect(()=>{
         if(dateRange.startDate && dateRange.endDate){
             //count the number of days for the guven range
-            const daysCount = differenceInCalendarDays(dateRange.endDate,dateRange.startDate);
+            const daysCount = differenceInCalendarDays(dateRange.endDate,dateRange.startDate) + 1;
             if(daysCount && listing.price){
                 setToatalPrice(daysCount*listing.price);
-
             }
             else{
                 setToatalPrice(listing.price);

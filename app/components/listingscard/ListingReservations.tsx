@@ -12,7 +12,7 @@ interface ListingReservationsProps{
     onChangeDate: (value:Range) => void;
     onSubmit: () => void;
     disabled?: boolean;
-    disabledDates: Date[];
+    disabledDates: Date[] | void;
 }
 const ListingReservations:React.FC<ListingReservationsProps> = ({
     price,
@@ -23,6 +23,7 @@ const ListingReservations:React.FC<ListingReservationsProps> = ({
     disabled,
     disabledDates
 }) => {
+  const dates = disabledDates ? disabledDates : [];
   return (
     <div className='bg-white rounded-xl border-[1px] border-neutral-400 overflow-hidden'>
         <div className='flex flex-row items-center gap-1 p-4'>
@@ -30,18 +31,19 @@ const ListingReservations:React.FC<ListingReservationsProps> = ({
         </div>
         <hr/>
         <Calender value={dateRange}
-        disabledDates={disabledDates}
+        disabledDates={dates}
         onChange={(value)=>onChangeDate(value.selection)}/>
         <hr/>
-        <div className='p-4 felx flex-row items-center justify-between font-semibold text-lg '>
-          <div className='p-4'>
+        <div className='p-4 flex flex-row items-center justify-between font-semibold text-lg '>
+          
+          <div className=''>Total - </div>
+          <div className=''>$ {totalPrice}</div>
+        </div>
+        <div className='p-4'>
             <Button disabled={disabled}
             label="Reserve"
             onClick={onSubmit}/>
           </div>
-          <div className=''>Total</div>
-          <div className=''>${totalPrice}</div>
-        </div>
     </div>
   )
 }
