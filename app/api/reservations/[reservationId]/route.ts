@@ -27,7 +27,6 @@ export async function DELETE (
     if(!reservationId || typeof reservationId !=="string") {
     throw new Error("Invalid reservation ID");
     }
-    //create a new listing reservation for the user
     
 
     const deleteReservation = await prisma.reservation.deleteMany({

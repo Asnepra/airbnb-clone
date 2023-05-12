@@ -4,7 +4,7 @@ import React, { useMemo, useState } from 'react'
 import Modal from './Modal';
 import useRentModal from '@/app/hooks/useRentModal';
 import Heading from '../Heading';
-import Categories, { categories } from '../navbar/Categories';
+import  { categories } from '../navbar/Categories';
 import CategoryInput from '../inputs/CategoryInput';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import CountrySelectProperty from '../inputs/CountrySelectProperty';
@@ -12,7 +12,6 @@ import dynamic from 'next/dynamic';
 import Counter from '../inputs/Counter';
 import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
-import { error } from 'console';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';

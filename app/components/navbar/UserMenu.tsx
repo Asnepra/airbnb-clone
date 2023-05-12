@@ -78,12 +78,12 @@ const UserMenu:React.FC<UserMenuProp>=({
                             <>
                             <MenuItem onClick={()=>router.push('/trips')}
                             label="My Trips"/>
-                            <MenuItem onClick={()=>{}}
+                            <MenuItem onClick={()=>router.push('/favorites')}
                             label="My Favourites"/>
                             
-                            <MenuItem onClick={()=>{}}
+                            <MenuItem onClick={()=>router.push('/reservations')}
                             label="My Reservations"/>
-                            <MenuItem onClick={()=>{}}
+                            <MenuItem onClick={()=>router.push('/properties')}
                             label="My Properties"/>
                             {/**This button disappears on home */}
                             <MenuItem onClick={rentModal.onOpen}

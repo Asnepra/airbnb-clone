@@ -1,19 +1,25 @@
-import Image from 'next/image'
+'use client'
 import { Inter } from 'next/font/google'
 import Container from './components/Container'
 import ClientOnly from './components/ClientOnly'
-import { is } from 'date-fns/locale'
 import EmptyState from './components/EmptyState'
-import getListings from './actions/getListings'
+import getListings, { GetListingParamsProps} from './actions/getListings'
 import ListingCard from './components/listingscard/ListingCard'
 import getCurrentUser from './actions/getCurrentUser'
+import { SafeListing } from './types'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default async function Home() {
+interface HomePageProps{
+  searchParams: GetListingParamsProps;
+}
+
+const  Home = async ({
+  searchParams: HomePageProps
+})=> {
   //get listings data
 
-  const listings =  await getListings();
+  const listings =  await getListings(searchParams);
   //Get current user for custom listings are available according to the user
 
   const currentUser = await getCurrentUser();
@@ -25,11 +31,12 @@ export default async function Home() {
     </ClientOnly>
 
   }
+  
   return (
     <ClientOnly>
       <Container>
         <div className='pt-24 grid sm:grid-cols-2 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-8'>
-          {listings.map((item)=>{
+          {listings.map((item: SafeListing)=>{
             return (
               <ListingCard currentUser={currentUser} key={item.id}
               data={item}/>
@@ -43,7 +50,7 @@ export default async function Home() {
 }
 
 
-
+export default Home;
 
 
 /**
